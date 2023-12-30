@@ -1,0 +1,26 @@
+name: Download File from Google Drive
+
+on:
+  push:
+    branches:
+      - main  # Change to your default branch name if different
+
+jobs:
+  download-file:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Download File from Google Drive
+        run: |
+          FILE_ID="1OREZTWPIY9b2-v3sWTo-RF5ZEU3K8bzh"
+          FILE_NAME="your_file.zip"  # Change to the desired file name
+
+          curl -L -o $FILE_NAME "https://drive.google.com/uc?id=$FILE_ID"
+
+          # Optional: Commit the downloaded file to the repository
+          git add $FILE_NAME
+          git commit -m "Add $FILE_NAME" || echo "No changes to commit"
+          git push
